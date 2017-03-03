@@ -33,6 +33,8 @@ Recommendation API in Cogntiive Services.
 3. itemId (Required): The item id that the recommender model will use to provide item recommendation to a given item.
 4. userId (Required): The user id that the recommender model will use to recommend items to a given user.
 
+
+Using postman to test the function app, below is the output in postman.
 ![Using postman to test the function app, here is the output](/Images/PostmanOutput.PNG)
 
 
