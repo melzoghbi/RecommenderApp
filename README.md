@@ -19,13 +19,13 @@ The function application out when running it locally from Visual Studio 2015.
 ## How to use this app:
 1. Setup Recommendation API service in Azure portal.
 2. Set Blob storage files in function.json file.
-3. Set Access key in run.csx file for the provisioned cognitive service service in azure.
-4. Set the base uri in run.csx file for the provisioned instance of cognitive service.
-5. Set the Items catalog (Restaurant Catalog as i use it in this app) in the function.json file.
-6. Set the User Transaction for items (Users' Restaurant Trnasactions) in the function.json file.
-7. The function app connects to Azure blob storage to read required files to build a recommender model in 
-Recommendation API in Cogntiive Services.
-7. Run and debug the function app in VS locally by clicking on F5! Enjoy.
+3. Set Azure blob storage connection string in AzureWebJobsStorage and AzureWebJobsmofunctions_STORAGE keys in appsettings.json file.
+4. Set Access key in run.csx file for the provisioned cognitive service service in azure.
+5. Set the base uri in run.csx file for the provisioned instance of cognitive service.
+6. Set the Items catalog (Restaurant Catalog as i use it in this app) in the function.json file.
+7. Set the User Transaction for items (Users' Restaurant Trnasactions) in the function.json file.
+8. The function app connects to Azure blob storage to read required files to build a recommender model in Recommendation API in Cogntiive Services.
+9. Run and debug the function app in VS locally by clicking on F5! Enjoy.
 
 ## Query String parameters
 1. modelId (Optional): The model that the function will connect to, if not provided, the app will create a new model.
