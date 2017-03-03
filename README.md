@@ -48,5 +48,17 @@ The Function Application will:
 
 
 ## More Information
-To learn more you can visit the complete Recommendations API Reference If you have questions, don't hesitate to contact me.
+
+[Azure Functions Developer Reference](https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference)
+
+[Working with Triggers and Bindings](https://docs.microsoft.com/en-us/azure/azure-functions/functions-triggers-bindings)
+
+[Create your first Azure function in VS](https://blogs.msdn.microsoft.com/webdev/2016/12/01/visual-studio-tools-for-azure-functions/)
+
+[Get started with Recommendation API](https://docs.microsoft.com/en-us/azure/cognitive-services/cognitive-services-recommendations-quick-start)
+
+[Recommendation sample app on GitHub](https://github.com/microsoft/Cognitive-Recommendations-Windows)
+
+
+Got questions? don't hesitate to contact me. You can follow me on Twitter: @MostafaElzoghbi
 
