@@ -1,4 +1,4 @@
-# Recommendations API Sample 
+# Recommendations API Function Application Sample 
 
 ## Introduction
 This function app is using content files; these files are stored in Azure blob storage to recommend items (Item to Item recommendation)
@@ -12,6 +12,9 @@ The Recommendations API identifies consumption patterns from your transaction in
 provide recommendations. These recommendations can help your customers more easily discover items that
 they may be interested in.  By showing your customers products that they are more likely to be interested in,
 you will, in turn, increase your sales.
+
+The function application out when running it locally from Visual Studio 2015.
+![Item Recommendation and User Recommendation output](/Images/FnAppOutputVS.PNG)
 
 ## How to use this app:
 1. Setup Recommendation API service in Azure portal.
@@ -34,12 +37,15 @@ Recommendation API in Cogntiive Services.
 
 
 ## Description
-The Function Application will:
-1. Create a model container.
-2. Add catalog and usage or transaction data needed to train the model.
-3. Trigger a recommendation model build.
-4. Monitor the training process, and notify you when the build has completed.
-5. Use the newly created build to get recommendations.
+
+The Function Application will execute the following activities:
+
+1. Read Catalog and transaction files from Azure blob storage.
+2. Create a model container.
+3. Add catalog and usage or transaction data needed to train the model.
+4. Trigger a recommendation model build.
+5. Monitor the training process, and notify you when the build has completed.
+6. Use the newly created build to get recommendations.
 
 ## Source Code Files
 - run.csx - The main file that included the function app code. 
