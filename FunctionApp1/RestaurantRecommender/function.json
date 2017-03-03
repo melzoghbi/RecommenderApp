@@ -1,0 +1,31 @@
+﻿{
+  "disabled": false,
+  "bindings": [
+    {
+      "authLevel": "function",
+      "name": "req",
+      "type": "httpTrigger",
+      "direction": "in"
+    },
+    {
+      "name": "res",
+      "type": "http",
+      "direction": "out"
+    },
+    {
+      "type": "blob",
+      "name": "iBlobRestaurants",
+      "path": "restaurantdata/RestaurantCatalog.csv",
+      "connection": "mofunctions_STORAGE",
+      "direction": "in"
+    },
+
+    {
+      "type": "blob",
+      "name": "iBlobRatings",
+      "path": "restaurantdata/RestaurantUsage.csv",
+      "connection": "mofunctions_STORAGE",
+      "direction": "in"
+    }
+  ]
+}
