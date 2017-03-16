@@ -16,8 +16,8 @@ using System.Text;
 
 public static async Task<HttpResponseMessage> Run(string iBlobRestaurants, string iBlobRatings, HttpRequestMessage req, TraceWriter log)
 {
-    string AccountKey = "237e6a8038a949d0bf516d6feb51d83f";
-    string BaseUri = "https://westus.api.cognitive.microsoft.com/recommendations/v4.0";
+    string AccountKey = "COGNITIVE_SERVICES_KEY";
+    string BaseUri = "COGNITIVE_SERVICE_URL";
     string modelName = "RecommenderModel";
     long buildId = 0;
    
