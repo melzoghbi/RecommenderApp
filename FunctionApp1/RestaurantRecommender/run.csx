@@ -16,7 +16,7 @@ using System.Text;
 
 public static async Task<HttpResponseMessage> Run(string iBlobRestaurants, string iBlobRatings, HttpRequestMessage req, TraceWriter log)
 {
-    string AccountKey = "CogServicesKey";
+    string AccountKey = "237e6a8038a949d0bf516d6feb51d83f";
     string BaseUri = "https://westus.api.cognitive.microsoft.com/recommendations/v4.0";
     string modelName = "RecommenderModel";
     long buildId = 0;
@@ -28,6 +28,10 @@ public static async Task<HttpResponseMessage> Run(string iBlobRestaurants, strin
         .FirstOrDefault(q => string.Compare(q.Key, "modelId", true) == 0)
         .Value;
 
+    long.TryParse( req.GetQueryNameValuePairs()
+        .FirstOrDefault(q => string.Compare(q.Key, "buildId", true) == 0)
+        .Value, out buildId);
+
     string userId = req.GetQueryNameValuePairs()
        .FirstOrDefault(q => string.Compare(q.Key, "userId", true) == 0)
        .Value;
@@ -36,20 +40,9 @@ public static async Task<HttpResponseMessage> Run(string iBlobRestaurants, strin
        .FirstOrDefault(q => string.Compare(q.Key, "itemId", true) == 0)
        .Value;
 
-    long.TryParse(req.GetQueryNameValuePairs()
-       .FirstOrDefault(q => string.Compare(q.Key, "userId", true) == 0)
-       .Value, out buildId);
 
     #endregion
-
-    #region Get request body
-    dynamic data = await req.Content.ReadAsAsync<object>();
-
-    // Set name to query string or body data
-    modelId = modelId ?? data?.modelId;
-    buildId =data?? data?.buildId!=null?data.buildId:0;
-
-    #endregion
+       
 
     // inistaniate the recommender
     RecommendationsApiWrapper recommender = new RecommendationsApiWrapper(AccountKey, BaseUri);
@@ -72,16 +65,30 @@ public static async Task<HttpResponseMessage> Run(string iBlobRestaurants, strin
     }
     #endregion
 
+    List<dynamic> RecommendedItemIds = null;
+    List<dynamic> RecommendedUserItems = null;
+
     // Get item-to-item recommendations and user-to-item recommendations one at a time
-    List<dynamic> RecommendedItemIds = GetRecommendationsSingleRequestForItem(recommender, itemId, modelId, buildId,log);
-    List<dynamic> RecommendedUserItems= GetRecommendationsSingleRequestForUser(recommender, userId, modelId, buildId, log);
+    if (!string.IsNullOrEmpty(userId) && !string.IsNullOrEmpty(itemId))
+    {
+         RecommendedItemIds = GetRecommendationsSingleRequestForItem(recommender, itemId, modelId, buildId, log);
+         RecommendedUserItems = GetRecommendationsSingleRequestForUser(recommender, userId, modelId, buildId, log);
+    }
+    else if (!string.IsNullOrEmpty(userId) && string.IsNullOrEmpty(itemId))
+    { // User recommendation U2I
+        RecommendedUserItems = GetRecommendationsSingleRequestForUser(recommender, userId, modelId, buildId, log);
+    }
+    else if (string.IsNullOrEmpty(userId) && !string.IsNullOrEmpty(itemId))
+    { // item recommendation I2I
+         RecommendedItemIds = GetRecommendationsSingleRequestForItem(recommender, itemId, modelId, buildId, log);
+    }
 
     Dictionary<string, List<dynamic>> results = new Dictionary<string, List<dynamic>>();
     results.Add("Recommended Restaurants", RecommendedItemIds);
     results.Add("User Recommendation", RecommendedUserItems);
 
-    return buildId == 0
-        ? req.CreateResponse(HttpStatusCode.BadRequest, "Please pass a name on the query string or in the request body")
+    return buildId == 0 || string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(itemId)
+        ? req.CreateResponse(HttpStatusCode.BadRequest, "Please pass a user id and item id on the query string or in the request body")
         : req.CreateResponse(HttpStatusCode.OK, results);
 }
 
